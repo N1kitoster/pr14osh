@@ -84,15 +84,19 @@
 					// функция успешного ответа сервера
 					success: function (_data) {
 						console.log("Авторизация прошла успешно, id: " +_data);
-						if(_data == "") {
+						if(_data == "fail" || _data == "") {
 							loading.style.display = "none";
 							button.className = "button";
 							alert("Логин или пароль не верный.");
-						} else {
-							localStorage.setItem("token", _data);
-							location.reload();
+						} else if(_data == "blocked") {
 							loading.style.display = "none";
 							button.className = "button";
+							alert("Пользователь заблочен или превышено количество попыток.");
+						} else {
+							localStorage.setItem("token", _data);
+							loading.style.display = "none";
+							button.className = "button";
+							location.reload();
 						}
 					},
 					// функция ошибки
